@@ -1,5 +1,3 @@
-<?php
-?>
 <html>
 <head>
     <title>BlackJack</title>
@@ -9,7 +7,7 @@
     <link rel="stylesheet" href="game.css">
     <script src="game.js"></script>
 </head>
-<body style="background-color: black;">
+<body style="background-color: #1a1919;">
 <header>
     <div class="head">
         <p>
@@ -32,7 +30,7 @@
             <p class="points">Dealer points: <span id="point2"></span></p>
         </div>
     </div>
-    <div class="status">
+    <div class="status" id="headState">
         <span id="state">
 
         </span>
@@ -42,6 +40,7 @@
         <button class = "btn btn-primary" onclick="stand()">Stand</button>
 <!--        <bn class = "btn"tton></button> -->
         <button class = "btn btn-danger" onclick="newGame()">New Game</button>
+        <button class = "btn btn-secondary" onclick="stats()">Statistics</button>
     </div>
 </div>
 </body>

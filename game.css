@@ -9,7 +9,8 @@
 }
 .cards{
     display: inline-flex;
-    background-color: #ff950d;
+    background: rgb(76,162,114);
+    background: linear-gradient(90deg, rgba(76,162,114,1) 0%, rgba(76,162,114,1) 38%, rgba(69,131,85,1) 66%, rgba(49,125,82,1) 100%);
     font-size:32px;
     color:white;
     margin:20px;
@@ -18,15 +19,24 @@
     align-content: center;
     width:45%;
     justify-content:center;
+    border: 15px saddlebrown groove;
 }
 
 .status{
     background-color: #ff950d;
     font-size:32px;
     color:white;
-    margin:60px auto;
+    margin:50px auto;
     text-align: center;
     width:250px;
+    border-radius: 20px;
+    /*display: none;*/
+    transform: translateY(450%);
+    transition: .2s;
+}
+
+.status.active{
+    transform: translateY(0);
 
 }
 
@@ -61,7 +71,11 @@
 }
 
 .photo{
-    width:145px;
-    height:227px;
-    padding:5px;
+    width:130px;
+    height:204px;
+    padding:4px;
+    margin:4px;
+    border:1px white solid
 }
+
+/*130 204*/

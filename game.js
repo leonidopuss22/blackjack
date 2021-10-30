@@ -13,12 +13,17 @@ var cards = [
     "kch", "kb", "kkr", "kp",
     "ach", "ab", "akr", "ap"
 ]
+var victories, defeat, winPercent;
+victories = defeat = winPercent = 0;
+
 var usedCards = [];
 var totalPoints = 0;
 var gameEnded = false;
 var dealerScore = 0;
 var dealerCardsOpen = [];
 function startGame() {
+    let audio = new Audio('sounds/giveup.mp3');
+    audio.play();
 //    if (gameEnded) return;
     let r;
     r = Math.floor(Math.random() * 52);
@@ -112,13 +117,17 @@ function startGame() {
 }
 
 function hit() {
+    if (gameEnded === false) {
+        let audio = new Audio('sounds/hit.mp3');
+        audio.play();
+    } else return;
     if (totalPoints >= 21) return
     let r;
     r = Math.floor(Math.random() * 52);
-    let morePlayerCard = cards[r];
+    var morePlayerCard = cards[r];
     while (usedCards.includes(morePlayerCard)) {
         r = Math.floor(Math.random() * 52);
-        let morePlayerCard = cards[r];
+        morePlayerCard = cards[r];
         if (usedCards.length > 9) break;
     }
     usedCards.push(morePlayerCard);
@@ -145,15 +154,19 @@ function hit() {
 }
 
 function stand() {
+    if (!gameEnded) {
+        let audio = new Audio('sounds/newgame.mp3');
+        audio.play();
+    }
     if (gameEnded) return;
     gameEnded = true;
     while (dealerScore < 17) {
         let r;
         r = Math.floor(Math.random() * 52);
-        let moreDealerCard = cards[r];
+        var moreDealerCard = cards[r];
         while (usedCards.includes(moreDealerCard)) {
             r = Math.floor(Math.random() * 52);
-            let moreDealerCard = cards[r];
+            moreDealerCard = cards[r];
             if (usedCards.length > 9) break;
         }
         usedCards.push(moreDealerCard);
@@ -172,12 +185,16 @@ function stand() {
         }
         document.getElementById("point2").innerHTML = `${dealerScore}`;
         document.getElementById("imgDealer").innerHTML = "<img src=\"images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"images/" + dealerCardsOpen[1] + ".png\" class='photo'>"
-        setTimeout(() => {document.getElementById("imgDealer").innerHTML += "<img src=\"images/" + moreDealerCard + ".png\" class='photo'>"}, 500)
+        setTimeout(() => {
+            document.getElementById("imgDealer").innerHTML += "<img src=\"images/" + moreDealerCard + ".png\" class='photo'>";
+            let audio = new Audio('sounds/stand.mp3');
+            audio.play();
+        }, 600)
     }
-    if (dealerScore > 17) {
-        document.getElementById("imgDealer").innerHTML = "<img src=\"images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"images/" + dealerCardsOpen[1] + ".png\" class='photo'>";
-        document.getElementById("point2").innerHTML = `${dealerScore}`;
-    }
+        if (dealerScore >= 17) {
+            document.getElementById("imgDealer").innerHTML = "<img src=\"images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"images/" + dealerCardsOpen[1] + ".png\" class='photo'>";
+            document.getElementById("point2").innerHTML = `${dealerScore}`;
+        }
     if (dealerScore > 21) win();
     else if (dealerScore === 21) lose();
     else {
@@ -188,28 +205,45 @@ function stand() {
 }
 
 function lose() {
+    document.getElementById('headState').classList.add('active');
     document.getElementById("state").innerHTML = "You lose!";
     gameEnded = true;
+    let audio = new Audio('sounds/lose.wav');
+    audio.play();
+    defeat += 1;
 }
 
 function win() {
+    document.getElementById('headState').classList.add('active');
     document.getElementById("state").innerHTML = "You won!";
     gameEnded = true;
+    let audio = new Audio('sounds/end.mp3');
+    audio.play();
+    victories += 1;
 }
 
 function draw() {
+    document.getElementById('headState').classList.add('active');
     document.getElementById("state").innerHTML = "Tie!";
     gameEnded = true;
+    defeat += 1;
 }
 
 function newGame() {
-    usedCards = [];
-    totalPoints = 0;
-    gameEnded = false;
-    dealerScore = 0;
-    dealerCardsOpen = [];
-    document.getElementById("state").innerHTML = "";
-    startGame();
+    document.getElementById('headState').classList.remove('active');
+    setTimeout(() => {
+        usedCards = [];
+        totalPoints = 0;
+        gameEnded = false;
+        dealerScore = 0;
+        dealerCardsOpen = [];
+        document.getElementById("state").innerHTML = "";
+        startGame();
+    }, 300)
+}
+
+function stats() {
+    alert(` Victories: ${victories}\n Total played: ${victories+defeat}\n Win rate: ${victories/defeat}`)
 }
 
 window.onload = function () {
