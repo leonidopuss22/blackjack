@@ -23,7 +23,7 @@ let dealerScore = 0;
 let dealerCardsOpen = [];
 
 function startGame() {
-    let audio = new Audio('/sounds/giveup.mp3');
+    let audio = new Audio('./sounds/giveup.mp3');
     audio.play();
 //    if (gameEnded) return;
     let r;
@@ -51,8 +51,8 @@ function startGame() {
 
 
     console.log(`${firstPlayerCard} ${secondPlayerCard} ${firstDealerCard} ${secondDealerCard}`);
-    document.getElementById("imgPlayer").innerHTML = "<img src=\"/images/" + firstPlayerCard + ".png\" class='photo'><img src=\"/images/" + secondPlayerCard + ".png\" class='photo'>";
-    document.getElementById("imgDealer").innerHTML = "<img src=\"/images/" + firstDealerCard + ".png\" class='photo'><img src=\"/images/rubashka.png\" class='photo'>";
+    document.getElementById("imgPlayer").innerHTML = "<img src=\"./images/" + firstPlayerCard + ".png\" class='photo'><img src=\"./images/" + secondPlayerCard + ".png\" class='photo'>";
+    document.getElementById("imgDealer").innerHTML = "<img src=\"./images/" + firstDealerCard + ".png\" class='photo'><img src=\"./images/rubashka.png\" class='photo'>";
     let playerPoints, dealerPoints;
     playerPoints = 0;
     dealerPoints = 0;
@@ -119,7 +119,7 @@ function startGame() {
 
 function hit() {
     if (gameEnded === false) {
-        let audio = new Audio('/sounds/hit.mp3');
+        let audio = new Audio('./sounds/hit.mp3');
         audio.play();
     } else return;
     if (totalPoints >= 21) return
@@ -146,7 +146,7 @@ function hit() {
         }
     }
     document.getElementById("point1").innerHTML = `${totalPoints}`;
-    document.getElementById("imgPlayer").innerHTML += "<img src=\"/images/" + morePlayerCard + ".png\" class='photo'>";
+    document.getElementById("imgPlayer").innerHTML += "<img src=\"./images/" + morePlayerCard + ".png\" class='photo'>";
     if (totalPoints > 21) {
         lose();
     } else if (totalPoints == 21) {
@@ -156,7 +156,7 @@ function hit() {
 
 function stand() {
     if (!gameEnded) {
-        let audio = new Audio('/sounds/newgame.mp3');
+        let audio = new Audio('./sounds/newgame.mp3');
         audio.play();
     }
     if (gameEnded) return;
@@ -185,15 +185,15 @@ function stand() {
             }
         }
         document.getElementById("point2").innerHTML = `${dealerScore}`;
-        document.getElementById("imgDealer").innerHTML = "<img src=\"/images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"/images/" + dealerCardsOpen[1] + ".png\" class='photo'>"
+        document.getElementById("imgDealer").innerHTML = "<img src=\"./images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"./images/" + dealerCardsOpen[1] + ".png\" class='photo'>"
         setTimeout(() => {
-            document.getElementById("imgDealer").innerHTML += "<img src=\"/images/" + moreDealerCard + ".png\" class='photo'>";
+            document.getElementById("imgDealer").innerHTML += "<img src=\"./images/" + moreDealerCard + ".png\" class='photo'>";
             let audio = new Audio('/sounds/stand.mp3');
             audio.play();
         }, 600)
     }
         if (dealerScore >= 17) {
-            document.getElementById("imgDealer").innerHTML = "<img src=\"/images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"/images/" + dealerCardsOpen[1] + ".png\" class='photo'>";
+            document.getElementById("imgDealer").innerHTML = "<img src=\"./images/" + dealerCardsOpen[0] + ".png\" class='photo'><img src=\"./images/" + dealerCardsOpen[1] + ".png\" class='photo'>";
             document.getElementById("point2").innerHTML = `${dealerScore}`;
         }
     if (dealerScore > 21) win();
